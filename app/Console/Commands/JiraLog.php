@@ -61,7 +61,8 @@ class JiraLog extends Command
      */
     public function handle()
     {
-        $this->date = $this->option('date') ?? date('Y-m-d');
+        $this->date     = $this->option('date') ?? date('Y-m-d');
+        $this->storyKey = $this->option('story') ?? '';
 
         $this->getWorkedTimeForDate();
 
@@ -105,7 +106,7 @@ class JiraLog extends Command
                 $nodeText = $crawler->filterXPath('//body/div/p[contains(@class, "outerLogInfo_")]')->text();
                 if (!empty(trim($nodeText))) {
                     if (preg_match_all('/(\d+)/', $nodeText, $matches)) {
-                        list($timeTrackingHours, $timeTrackingMinutes) = current(array_unique($matches));
+                        list($timeTrackingHours, $timeTrackingMinutes) = current(array_unique($matches, SORT_REGULAR));
                         $text = ">> [$this->date] You already worked $timeTrackingHours hours and $timeTrackingMinutes minutes";
                         Log::info($text);
                         $this->info($text);
