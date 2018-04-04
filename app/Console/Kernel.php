@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\JiraLog::class
+        Commands\JiraLog::class,
+        Commands\UpdateIssue::class,
     ];
 
     /**
@@ -24,8 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('jira:log')
-            ->dailyAt('22:00')
-            ->sendOutputTo(storage_path('logs/jira.log'));
+//        $schedule->command('jira:log')
+//            ->dailyAt('22:00')
+//            ->sendOutputTo(storage_path('logs/jira.log'));
     }
 }
